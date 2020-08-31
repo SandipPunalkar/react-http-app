@@ -14,8 +14,11 @@ class Appp extends Component {
     this.setState({ posts });
   }
 
-  handleAdd = () => {
-    console.log("Add");
+  handleAdd = async () => {
+    const obj = { title: "a", body: "b" };
+    const { data: post } = await axios.post(apiEndpoint, obj);
+    const posts = [post, ...this.state.posts];
+    this.setState({ posts });
   };
 
   handleUpdate = (post) => {
@@ -29,7 +32,7 @@ class Appp extends Component {
   render() {
     return (
       <React.Fragment>
-        <button className="btn btn-primary" onClick={this.handleAdd}>
+        <button className="btn btn-primary m-3" onClick={this.handleAdd}>
           Add
         </button>
         <table className="table">
