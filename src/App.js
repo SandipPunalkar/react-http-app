@@ -3,6 +3,19 @@ import axios from "axios";
 //import logo from "./logo.svg";
 import "./App.css";
 
+axios.interceptors.response.use(null, (error) => {
+  const expectedError =
+    error.response &&
+    error.response.status >= 400 &&
+    error.response.status < 500;
+
+  if (!expectedError) {
+    console.log("Loggging the error", error);
+    alert("An inexpected error occurred.");
+  }
+  return Promise.reject(error);
+});
+
 const apiEndpoint = "https://jsonplaceholder.typicode.com/posts";
 class Appp extends Component {
   state = {
@@ -42,10 +55,7 @@ class Appp extends Component {
       //throw new Error("");
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
-      alert("This post has already been deleted.");
-    else {
-      console.log("Loggging the error", ex);
-      alert("An inexpected error occurred.");
+        alert("This post has already been deleted.");
 
       this.setState({ posts: originalPosts });
     }
