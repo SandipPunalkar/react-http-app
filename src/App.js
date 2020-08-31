@@ -39,9 +39,14 @@ class Appp extends Component {
 
     try {
       await axios.delete(apiEndpoint + "/" + post.id);
-      throw new Error("");
+      //throw new Error("");
     } catch (ex) {
-      alert("Something failed");
+      if (ex.response && ex.response.status === 400)
+      alert("This post has already been deleted.");
+    else {
+      console.log("Loggging the error", ex);
+      alert("An inexpected error occurred.");
+
       this.setState({ posts: originalPosts });
     }
   };
