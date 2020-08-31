@@ -3,6 +3,8 @@ import http from "./services/httpService";
 import config from "./config.json";
 //import logo from "./logo.svg";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class Appp extends Component {
   state = {
@@ -38,7 +40,7 @@ class Appp extends Component {
     this.setState({ posts });
 
     try {
-      await http.delete(config.apiEndpoint + "/" + post.id);
+      await http.delete("S" + config.apiEndpoint + "/" + post.id);
       //throw new Error("");
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
@@ -51,6 +53,7 @@ class Appp extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <button className="btn btn-primary m-3" onClick={this.handleAdd}>
           Add
         </button>
